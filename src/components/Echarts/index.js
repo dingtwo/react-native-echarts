@@ -21,6 +21,14 @@ export default class App extends Component {
     this.refs.chart.postMessage(JSON.stringify(option));
   }
 
+  /**
+   * 修复安卓下不渲染的问题
+   * cp ./node_modules/native-echarts/src/components/Echarts/tpl.html ./android/app/src/main/assets
+   */
+  getSource() {
+    return Platform.OS === 'android' ? {uri: 'file:///android_asset/tpl.html'} : require('./tpl.html');
+  }
+
   render() {
     return (
       <View style={{flex: 1, height: this.props.height || 400,}}>
